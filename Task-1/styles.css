@@ -83,9 +83,11 @@ header{
 }
 .home-img{
     flex: 1 1 17rem;
+    z-index: 0;
 }
 .home-img img{
     animation: animate 3s linear infinite;
+    z-index: 0;
 }
 @keyframes animate{
     0%{
@@ -193,7 +195,8 @@ header{
     color: var(--second-color);
 }
 
-.container{
+.container, 
+.container-app{
     display: flex;
     width: 100%;
     flex-wrap: wrap;
@@ -297,7 +300,6 @@ header{
     header{
         padding: 11px 4%;
     }
-
     #menu-icon{
         display:initial;
     }
@@ -313,6 +315,7 @@ header{
         border-top: 2px solid var(--main-color);
         transform: 0.2s;
         text-align: left;
+        /* z-index: 9999; */
     }
     .navbar.active{
         top: 100%;
@@ -345,7 +348,7 @@ header{
     .heading span{
         font-size: 0.9rem;
     }
-    .about{
+    .container-app{
         flex-direction: column-reverse;
     }
     .links{
@@ -357,5 +360,8 @@ header{
     .links{
         display: flex;
         flex-direction: column;
+    }
+    .container-app{
+        flex-direction: column-reverse;
     }
 }
