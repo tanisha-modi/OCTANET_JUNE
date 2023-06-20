@@ -7,6 +7,7 @@ const filterOption = document.querySelector('#filter-todo')
 
 //Event Listeners
 document.addEventListener('DOMContentLoaded', getTodos);
+document.addEventListener('DOMContentLoaded', getComTodos);
 todoButton.addEventListener('click', addTodo);
 todoList.addEventListener('click', deleteCheck);
 filterOption.addEventListener('click', filterTodo)
@@ -59,7 +60,9 @@ function deleteCheck(e){
         // animation
         todo.classList.add('fall');
         // todo.remove();
+
         removeLocalTodos(todo);
+        removeComTodos(todo);
         todo.addEventListener('transitionend', function(){
             todo.remove();
         });
@@ -69,6 +72,8 @@ function deleteCheck(e){
     if (item.classList[0] === 'complete-btn') {
         const todo = item.parentElement;
         todo.classList.toggle('completed');
+        removeLocalTodos(todo);
+        saveCompleteTodos(todo.innerText);
     }
 }
 
@@ -98,6 +103,57 @@ function filterTodo(e){
         }
     });
 }
+// save completed todos
+function saveCompleteTodos(todo){
+    // hey ..do i already have thing in there ?
+    let comTodos;
+    if(localStorage.getItem('comTodos') === null){
+        comTodos = [];   // if dont have array, make one
+    }
+    else{
+        comTodos = JSON.parse(localStorage.getItem('comTodos'));   // if it already exist, return it and save to todos 
+    }
+    comTodos.push(todo);  // pushing into the array
+    localStorage.setItem('comTodos', JSON.stringify(comTodos));    // saving to localStorage
+}
+
+// getting completed todos back after refreshing
+function getComTodos(){
+    let comTodos;
+    if(localStorage.getItem('comTodos') === null){
+        comTodos = [];   // if dont have array, make one
+    }
+    else{
+        comTodos = JSON.parse(localStorage.getItem('comTodos'));   // if it already exist, return it and save to todos 
+    }
+    comTodos.forEach(function(todo){
+        const todoDiv = document.createElement('div');
+        todoDiv.classList.add("todo");
+        todoDiv.classList.add('completed');
+        
+        // create li
+        const newTodo = document.createElement('li');
+        newTodo.innerText = todo;
+        newTodo.classList.add('todo-item');
+        todoDiv.appendChild(newTodo);
+        
+        // checkmark button
+        const completedButton = document.createElement('button');
+        completedButton.innerHTML = '<i class="fas fa-check"></i>';
+        completedButton.classList.add("complete-btn");
+        todoDiv.appendChild(completedButton);
+        
+        // trash button
+        const trashButton = document.createElement('button');
+        trashButton.innerHTML = '<i class="fas fa-trash"></i>';
+        trashButton.classList.add("trash-btn");
+        todoDiv.appendChild(trashButton);
+        
+        // append to list
+        todoList.appendChild(todoDiv);
+    });
+}
+
 
 function saveLocalTodos(todo){
     // hey ..do i already have thing in there ?
@@ -145,7 +201,6 @@ function getTodos(){
     
         // append to list
         todoList.appendChild(todoDiv);
-    
     });
 }
 
@@ -158,8 +213,21 @@ function removeLocalTodos(todo){
     else{
         todos = JSON.parse(localStorage.getItem('todos'));   // if it already exist, return it and save to todos 
     }
-    // const todoIndex = 
     const todoIndex = todo.children[0].innerText;
     todos.splice(todos.indexOf(todoIndex), 1);   // index pr jaake 2 index htana h
     localStorage.setItem('todos', JSON.stringify(todos));
+}
+
+// deleting from completed section
+function removeComTodos(com){
+    let comTodos;
+    if(localStorage.getItem('comTodos') === null){
+        comTodos = [];   // if dont have array, make one
+    }
+    else{
+        comTodos = JSON.parse(localStorage.getItem('comTodos'));   // if it already exist, return it and save to todos 
+    }
+    const comTodoIndex = com.children[0].innerText;
+    comTodos.splice(comTodos.indexOf(comTodoIndex), 1);   // index pr jaake 2 index htana h
+    localStorage.setItem('comTodos', JSON.stringify(comTodos));
 }
