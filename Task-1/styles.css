@@ -13,6 +13,9 @@
     scroll-behavior: smooth;
 
 }
+::-webkit-scrollbar{
+    display: none;
+}
 :root{
     --main-color : #008148; 
     --second-color : #1e3932;
@@ -204,42 +207,29 @@ header{
     margin-top : 2rem;
 }
 .delivery-img,
-.app-img{
+.app-img,
+.about-img{
     flex: 1 1 21rem;
 }
 .delivery-text,
-.app-text{
+.app-text,
+.about-text{
     flex: 1 1 21rem;
 }
 .delivery-text h2,
-.app-text h2{
-    font-size: 1.2rem;
-    color: var(--second-color);
-}
-.delivery-text p, 
-.app-text p{
-    margin: 0.5rem 0 1rem;
-    text-align: justify;
-}
-.about{
-    display: flex;
-    flex-wrap: wrap;
-    background-color: #ebdbc8;
-    gap: 1.5rem;
-}
-.about-img{
-    flex: 1 1 17rem;
-}
-.about-text{
-    flex: 1 1 17rem;
-}
+.app-text h2,
 .about-text h2{
     font-size: 1.2rem;
     color: var(--second-color);
 }
+.delivery-text p, 
+.app-text p,
 .about-text p{
     margin: 0.5rem 0 1rem;
     text-align: justify;
+}
+.about{
+    background-color: #ebdbc8;
 }
 .contact{
     display: flex;
